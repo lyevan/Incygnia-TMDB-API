@@ -47,6 +47,20 @@ export const getSeriesInfo = async (req, res) => {
       },
     });
 
+    const logo = await fetch(
+      `${TMDB_BASE_URL}/tv/${id}/images?language=en-US&include_image_language=en`,
+      {
+        headers: {
+          Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const logoData = await logo.json();
+    let logoPath = null;
+    if (logoData.logos && logoData.logos.length > 0) {
+      logoPath = logoData.logos[0].file_path;
+    }
     const trailer = await fetch(
       `${TMDB_BASE_URL}/tv/${id}/videos?language=en-US`,
       {
@@ -91,7 +105,7 @@ export const getSeriesInfo = async (req, res) => {
     const data = await response.json();
     res.json({
       success: true,
-      results: { ...data, trailerKey, recommendations },
+      results: { ...data, trailerKey, recommendations, logo: logoPath },
     });
   } catch (error) {
     console.error("Error fetching series info:", error);
