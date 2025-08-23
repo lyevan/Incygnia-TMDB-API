@@ -47,6 +47,23 @@ export const getMovieInfo = async (req, res) => {
       },
     });
 
+    // Get first movie logo available
+    const logo = await fetch(
+      `${TMDB_BASE_URL}/movie/${id}/images?language=en-US&include_image_language=en`,
+      {
+        headers: {
+          Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const logoData = await logo.json();
+    let logoPath = null;
+    if (logoData.logos && logoData.logos.length > 0) {
+      logoPath = logoData.logos[0].file_path;
+    }
+
     const trailer = await fetch(
       `${TMDB_BASE_URL}/movie/${id}/videos?language=en-US`,
       {
@@ -86,6 +103,7 @@ export const getMovieInfo = async (req, res) => {
       success: true,
       results: {
         ...movieData,
+        logo: logoPath,
         trailerKey: trailerKey,
         recommendations: recommendations,
       },
