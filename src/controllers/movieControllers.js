@@ -49,7 +49,7 @@ export const getMovieInfo = async (req, res) => {
 
     // Get first movie logo available
     const logo = await fetch(
-      `${TMDB_BASE_URL}/movie/${id}/images?language=en-US&include_image_language=en`,
+      `${TMDB_BASE_URL}/movie/${id}/images?include_image_language=en`,
       {
         headers: {
           Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`,

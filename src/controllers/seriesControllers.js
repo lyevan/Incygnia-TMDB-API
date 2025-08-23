@@ -48,7 +48,7 @@ export const getSeriesInfo = async (req, res) => {
     });
 
     const logo = await fetch(
-      `${TMDB_BASE_URL}/tv/${id}/images?language=en-US&include_image_language=en`,
+      `${TMDB_BASE_URL}/tv/${id}/images?include_image_language=en`,
       {
         headers: {
           Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`,
