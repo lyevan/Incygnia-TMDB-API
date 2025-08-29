@@ -89,13 +89,16 @@ export const searchMulti = async (req, res) => {
       throw new Error(`TMDB API responded with status: ${response.status}`);
     }
 
-    const data = await response.json();
-
-    // Filter results based on your requirements
+    const data = await response.json();    // Filter results based on your requirements
     const filteredResults = data.results
       .filter((item) => {
         // Only allow 'tv' and 'movie' media types
         if (item.media_type !== "tv" && item.media_type !== "movie") {
+          return false;
+        }
+
+        // Exclude shows with vote_average below 3.0
+        if (item.vote_average < 3.0) {
           return false;
         }
 
