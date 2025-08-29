@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { testGemini, generateContent, getMoodBasedRecommendation, getMoodBasedRecommendationById } from "../controllers/geminiControllers.js";
+import {
+  testGemini,
+  generateContent,
+  getMoodBasedRecommendation,
+  getMoodBasedRecommendationById,
+} from "../controllers/geminiControllers.js";
 
 const router = Router();
 
